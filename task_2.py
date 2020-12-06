@@ -1,5 +1,4 @@
 import json
-import re
 
 def MaxString(A, s, k):
     st = False
@@ -38,11 +37,6 @@ def MaxString(A, s, k):
                 else: break
     return(st, m)
 
-inp = open('input.txt', 'r')
-out = open('output.txt', 'w')
-s = inp.read()
-print(s)
-k = 0
 integer = 'integer.json'
 real = 'real.json'
 bools = 'bool.json'
@@ -51,14 +45,21 @@ operation = 'operation.json'
 whitespace = 'whitespace.json'
 ids = 'id.json'
 files = [real, integer, keyword, bools, operation, whitespace, ids]
-while (k <= len(s)):
-    fl = True
-    for i in files:
-        res = MaxString(i, s, k)
-        if (res[0] == True):
-            out.write("<" + i[:i.find('.')] + ", " + s[k:k + res[1]] + ">" + '\n')
-            k += res[1]
-            fl = False
-    if(fl):k+=1
-inp.close()
-out.close()
+
+with open('input.txt', 'r') as inp, open('output.txt', 'w') as out:
+    s = inp.read()
+    print(s)
+    k = 0
+
+    while (k <= len(s)):
+        fl = True
+        for i in files:
+            res = MaxString(i, s, k)
+            if (res[0] == True):
+                out.write("<" + i[:i.find('.')] + ", " + s[k:k + res[1]] + ">" + '\n')
+                k += res[1]
+                fl = False
+                break
+        if(fl):k+=1
+
+
